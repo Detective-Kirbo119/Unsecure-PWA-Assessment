@@ -3,7 +3,7 @@ import time
 import random
 
 
-def insertUser(username, password, DoB):
+def insert_user(username, password, DoB):
     con = sql.connect("database_files/database.db")
     cur = con.cursor()
     cur.execute(
@@ -14,7 +14,7 @@ def insertUser(username, password, DoB):
     con.close()
 
 
-def retrieveUsers(username, password):
+def retrieve_users(username, password):
     con = sql.connect("database_files/database.db")
     cur = con.cursor()
     cur.execute(f"SELECT * FROM users WHERE username = '{username}'")
@@ -39,7 +39,7 @@ def retrieveUsers(username, password):
             return True
 
 
-def insertFeedback(feedback):
+def insert_feedback(feedback):
     con = sql.connect("database_files/database.db")
     cur = con.cursor()
     cur.execute(f"INSERT INTO feedback (feedback) VALUES ('{feedback}')")
@@ -47,7 +47,7 @@ def insertFeedback(feedback):
     con.close()
 
 
-def listFeedback():
+def list_feedback():
     con = sql.connect("database_files/database.db")
     cur = con.cursor()
     data = cur.execute("SELECT * FROM feedback").fetchall()
