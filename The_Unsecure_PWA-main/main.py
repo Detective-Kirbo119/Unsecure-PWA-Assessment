@@ -3,12 +3,20 @@ import user_management as dbHandler
 import pyotp
 import qrcode
 import base64
+from flask_limiter import Limiter
+from flask_limiter.util import get_remote_address
 from io import BytesIO
 import re
 import os
 
 app = Flask(__name__)
 app.secret_key = os.urandom(24)  # Generate a secure random secret key
+limiter = Limiter(
+    get_remote_address,
+    app=app,
+    default_limits=["200 per day", "50 per hour"]  # Global limits (optional)
+)
+
 
 def is_safe_url(target):
     """Validate if the URL is safe for redirection. Input validation of url"""
@@ -79,6 +87,7 @@ def get_2fa():
 
 @app.route("/index.html", methods=["POST", "GET"])
 @app.route("/", methods=["POST", "GET"])
+@limiter.limit("2 per minute", methods=["POST"])  # Limits the login attempts to # per minute per IP
 def home():
     if request.method == "GET":
         target_url = request.args.get("url")
