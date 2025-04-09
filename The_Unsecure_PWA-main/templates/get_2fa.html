@@ -1,0 +1,11 @@
+<html>
+  <h1>Hello, welcome to 2FA enabler</h1>
+  <h1>Scan the QR code</h1>
+  <img src="data:image/png;base64,{{ qr_code }}" />
+
+  <form action="index.html" method="post">
+    <label for="otp">Enter the OTP from your app:</label><br />
+    <input type="text" id="otp" name="otp" /><br />
+    <input type="submit" value="Enable 2FA" />
+  </form>
+</html>
